@@ -9,11 +9,18 @@ const equals = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
 const getValue = (part, o) =>
   Object.entries(o).find(([k, v]) => k.startsWith(part))?.[1];
 
+// For all check function, a is needed word, b is given word
+
 const checkSymbols = (a, b) => {
   let arr = [];
-  a.forEach((i, id) => {
-    if (b.includes(i) && arr.includes(i) === false) {
-      arr.push(i);
+  // a.forEach((i, id) => {
+  //   if (b.includes(i) && arr.includes(i) === false) {
+  //     arr.push(i);
+  //   }
+  // });
+  b.forEach((i, id) => {
+    if (a.includes(i)) {
+      arr.push(id);
     }
   });
   return arr;
@@ -22,11 +29,23 @@ const checkSymbols = (a, b) => {
 const checkPlaces = (a, b) => {
   let arr = [];
   a.forEach((i, id) => {
-    if (b[id] === i) {
+    if (b[id] == i) {
       arr.push(id);
     }
   });
 
+  return arr;
+};
+
+// a = mimsy, b = memes
+
+const checkNotInWord = (a, b) => {
+  let arr = [];
+  b.forEach((i, id) => {
+    if (a.includes(i) === false) {
+      arr.push(id);
+    }
+  });
   return arr;
 };
 
@@ -66,7 +85,8 @@ const checkWord = async (word) => {
   const result = {
     correct: equals(needed, given),
     correctSymbols: checkSymbols(needed, given),
-    correctPlaces: checkPlaces(needed, given)
+    correctPlaces: checkPlaces(needed, given),
+    notCorrect: checkNotInWord(needed, given)
   };
 
   return result;
