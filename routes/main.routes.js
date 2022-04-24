@@ -101,6 +101,15 @@ router.get("/words", async (req, res) => {
   }
 });
 
+router.get("/todayword", async (req, res) => {
+  try {
+    const word = await getTodayWord();
+    res.json(word);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
 router.post("/check", async (req, res) => {
   try {
     const word = req.query.word;
